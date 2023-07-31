@@ -1,0 +1,29 @@
+
+function OneColorCenterTrackPlotter(Matrix,Color)
+
+if size(Matrix,3)~=3
+    error('Matrix input must be in the format of t,x,y along the third dimension. Tracks are arranged y m and n.');
+end
+
+if size(Color,2)~=3
+    error('Color needs tobe given in RGB triplets normalized so 255.')
+end
+
+Color=Color/255;
+[~,n,~]=size(Matrix);
+
+deltaColor1=([1 1 1]-Color)/n;
+deltaColor2=([0 0 0]-Color)/n;
+
+figure
+hold on
+
+for i=1:n
+    plot(Matrix(:,i,2)-Matrix(1,i,2),Matrix(:,i,3)-Matrix(1,i,3),'Color',(Color-(n/2)*deltaColor2)+i*deltaColor1)
+end
+
+set(gcf,'Position',[100 100 500 500]);
+xlim([-6 6]);
+ylim([-6 6]);
+
+end
